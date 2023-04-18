@@ -27,7 +27,7 @@ type NestedCrossRecord<T> = Partial<
   OsRecord<T | Partial<ArchRecord<T>>> | ArchRecord<T | Partial<OsRecord<T>>>
 >;
 
-export function createDownloadURL(name: string, base_url: URL): string {
+export function getFileName(name: string): string {
   const extensions = defaultExtensions;
   const prefixes = defaultPrefixes;
   // FIXME: implement default suffix
@@ -41,15 +41,11 @@ export function createDownloadURL(name: string, base_url: URL): string {
     }
   }
 
-  if (!base_url.pathname.endsWith("/")) {
-    base_url.pathname = `${base_url.pathname}/`;
-  }
-
   const prefix = getCrossOption(prefixes) ?? "";
   const extension = extensions[Deno.build.os];
   const filename = `${prefix}${name}${suffix}.${extension}`;
 
-  return new URL(filename, base_url).toString();
+  return filename;
 }
 
 function getCrossOption<T>(record?: NestedCrossRecord<T>): T | undefined {
