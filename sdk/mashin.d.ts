@@ -22,6 +22,9 @@ declare global {
     class DynamicProvider {
       constructor(name: string, path: string, props: Inputs);
     }
+    class DynamicBackend {
+      constructor(name: string, path: string, props: Inputs);
+    }
     class DynamicResource {
       constructor(urn: string, config: Inputs);
 
